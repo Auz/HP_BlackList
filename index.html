@@ -1,95 +1,209 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="utf-8"> 
+    <title>HP_BlackList - A PHP HTTP BlackList Class</title> 
+    <meta name="description" content="HP_BlackList is an OO PHP class which wraps queries against Project Honey Pot's HTTP:BL API"> 
+    <meta name="author" content=""> 
+ 
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements --> 
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]--> 
+ 
+    <!-- Le styles --> 
+    <link href="assets/css/main.css" rel="stylesheet"> 
+    <link href="assets/css/bootstrap.css" rel="stylesheet"> 
+    <link href="assets/css/docs.css" rel="stylesheet"> 
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet"> 
+ 
+  </head> 
+ 
+  <body> 
 
-  <title>Auz/HP_BlackList @ GitHub</title>
+ <a href="https://github.com/Auz/HP_BlackList"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+ 
+    <!-- Masthead (blueprinty thing)
+    ================================================== --> 
+    <header class="jumbotron masthead" id="overview" style='padding-top:2px'> 
+      <div class="inner"> 
+        <div class="container"> 
+          <h1>HP_BlackList - A PHP HTTP BlackList Class</h1> 
+          <p class="lead"> 
+           HP_BlackList is an OO PHP class which encapsulates queries against Project Honey Pot's HTTP:BL API.<br />
+            </p> 
+        </div><!-- /container --> 
+      </div> 
+    </header> 
+ 
+    
+    <div class="container"> 
+ 
+ 
+ 
+<!-- About HP_BlackList
+================================================== --> 
+<section id="about"> 
+  <div class="page-header"> 
+    <h1>About HP_BlackList</h1> 
+  </div> 
+  <div class="row"> 
+    <div class="span8"> 
+      <h3>Poject Honey Pot's API</h3> 
+      <p>Project Honey Pot has an API called Http:BL which uses effecient DNS queries to check IP addresses against their black lists. You can see more about this project, (and help out by adding a honey pot to your site) at: <a href="http://www.projecthoneypot.org/httpbl_api.php">http://www.projecthoneypot.org/httpbl_api.php</a></p>
+    </div> 
+    <div class="span8"> 
+      <h3>Features of this class</h3> 
+      <p>This small class encapsulates requests to the Http:BL for easy integration with your code. With this PHP class one can easily identify/filter out spammers, harvesters, and other types of suspicious traffic. It is built using OO PHP and optimized for use with eclipse or other IDE's which support phpdoc and autocomplete. Results can be returned in an object. Best if used with PHP 5.3+, but PHP > 5 is required.</p>  
+    </div> 
+  </div><!-- /row -->
+</section> 
+ 
+ 
+ 
+<!-- Methods
+================================================== --> 
+<section id="methods"> 
+  <div class="page-header"> 
+    <h1>How to use</h1> 
+  </div> 
+  <div class="row"> 
+  <div class="span16"> 
+      <h2>Configuration</h2> 
+      <p>
+      The class is self contained and requires no setup other then adding your Http:BL API key. If you do not already have one, grab an API key from: <a href="http://www.projecthoneypot.org/httpbl_configure.php">http://www.projecthoneypot.org/httpbl_configure.php</a><br />Save the API key as the value of the constant HP_API_KEY at the top of the file. If you would rather store the API key somewhere else, perhaps in another configuation file, you can use the method getAPIKey() to fetch the value.
+</p> 
+    </div> 
+</div>
+  <div class="row"> 
+    <div class="span16"> 
+      <h2>Methods</h2> 
+      <p>
+       <table class="bordered-table zebra-striped"> 
+        <thead> 
+          <tr> 
+            <th style="width: 190px;">method</th> 
+            <th>Description</th> 
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><strong>allow($ip)</strong></td>
+            <td>A static method which returns true if the passed in IP address is less than the thresholds set, or false on failure. Adjust $threatThreshold and $typeBitThreshold to adjust this method's sensitivity. On error, this method assumes the IP should be allowed.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>check($ip)</strong></td>
+            <td>A static method which checks the IP against the black list and returns an object of <em>HP_BlackListResult</em> populated with the returned information. On error this method returns an almost empty object, but the type is set to 'not blacklisted', and threat to 0.
+            </td>
+          </tr>
+        </body> 
+    </table>
+        </div> 
+  </div><!-- /row --> 
+ 
+ <div class="row"> 
+    <div class="span16"> 
+      <h2>HP_BlackListResult</h2> 
+      <p>
+      The result object represents the response from the query, as well as some translations back into human readable values. It is returned when using the <em>check()</em> method. 
+</p> 
+    <table class="bordered-table zebra-striped"> 
+        <thead> 
+          <tr> 
+            <th style="width: 190px;">property</th> 
+            <th>Values</th> 
+          </tr> 
+        </thead> 
+        <tbody> 
+          <tr> 
+            <td>$ip</td> 
+            <td>The IP address queried</td> 
+          </tr> 
+          <tr> 
+            <td>$activity</td> 
+            <td> 
+The number of days since the last activity detected from this IP. This is the second octect of the response. This will be null if the IP is detected to be from a search engine.
+            </td>
+          </tr>
+          <tr> 
+            <td>$theat</td> 
+            <td> 
+A thread score as returned by Project Honey Pot. It is an integer from 0 to 255, where 255 is the most <em>threatening</em>. This is the third octect.
+            </td>
+          </tr>
+          <tr> 
+            <td>$typeBit</td> 
+            <td> 
+The bit mask returned by as returned by the query. This is the fourth octect. 
+            </td>
+          </tr>
+          <tr> 
+            <td>$typeArray</td> 
+            <td> 
+An array of detected types as parsed out of the typeBit mask. The possible values of this array are stored as constants at the top of the class. For example, this array could be: array(HP_BlackList::TYPE_SUSPICIOUS, HP_BlackList::TYPE_HARVESTER)
+            </td>
+          </tr>
+          <tr> 
+            <td>$searchEngineType</td> 
+            <td> 
+The type of search crawler detected, in plain text. Eg: 'Google' or 'InfoSeek' :). Only set if a search engine crawler is detected.
+            </td>
+          </tr>
+          <tr> 
+            <td>$searchEngineTypeCode</td> 
+            <td> 
+The type code returned by the query. This represents the search engine type, and the mapping between the type and the code are defined at the top of the file. Only set if a search engine crawler is detected.
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    </div> 
+  </div><!-- /row --> 
+  
+  
+  <div class="row"> 
+    <div class="span16"> 
+      <h2>Examples</h2> 
+      <p>A simple way to block known malicious IP addresses:</p>
+<pre class="prettyprint linenums">
+require_once(HP_BlackList.class.php);
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #d4eaf2;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #2b150d; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #2b150d; }
-    h3 { text-align: center; color: #2b150d; }
-    a { color: #2b150d; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+if( !HP_BlackList::allow($_SERVER['REMOTE_ADDR']) ) {
+    die('not allowed');
+}
+</pre>
+<p>Or you can use the HP_BlackListResult object for more fine grain control. For example here we block only harvesters:</p>
+<pre class="prettyprint linenums">
+require_once(HP_BlackList.class.php);
 
-<body>
-  <a href="https://github.com/Auz/HP_BlackList"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
+if( in_array( $blr->typeArray, HP_BlackList::TYPE_HARVESTER) ) {
+    die('no harvesters allowed');
+}
+</pre>
+<p>Find only google search crawlers</p>
+<pre class="prettyprint linenums">
+require_once(HP_BlackList.class.php);
 
-  <div id="container">
+$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
+if( $blr->searchEngineType == 'Google' ) {
+    echo "Hello google!";
+}
+</pre>
 
-    <div class="download">
-      <a href="https://github.com/Auz/HP_BlackList/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/Auz/HP_BlackList/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
     </div>
+</div><!-- /row --> 
 
-    <h1><a href="https://github.com/Auz/HP_BlackList">HP_BlackList</a>
-      <span class="small">by <a href="https://github.com/Auz">Auz</a></span></h1>
-
-    <div class="description">
-      A PHP class for checking IP's against Project Honey Pot's black list API
-    </div>
-
-    
-      <p><p>HP_BlackList provides a PHP class which checks IP addresses against Project Honey Pot's http:BL (black list).</p>
-<p>
-For more information on Project Honey Pot and their API see: Project Honey Pot</p>
-<h3>
-Features
-</h3>
-<ul>
-<li>
-    Wraps the Project Honey Pot's API queries in simple to use OO class</li>
-<li>
-    Returns an object populated with the results of the query
-</li>
-
-<h3>Methods</h3>
-<ul>
-<li>
-    <strong>allow($ip)</strong> - [Static] Returns true if the passed in IP address passed the thresholds set, or false on failure. Adjust $threatThreshold and $typeBitThreshold to adjust this method's sensitivity. On error this method assumes the IP should be allowed.</li>
-<li>
-<strong>check($ip)</strong> - [Static] Checks the IP against the black list and returns an object of HP_BlackListResult populated with the returned information. On error this method assumes the IP should be allowed.</li>
-</ul></p>
-    
-
-    
-
-    
-      <h2>Install</h2>
-      <p>Add your http:BL API key to the class const HP_API_KEY. If you do not have an API key already you can sign up for one (free) here: http://www.projecthoneypot.org/httpbl_configure.php . If you would prefer to save the API key to a configuration file somewhere else, you can use the getAPIKey() method to retrieve that value.</p>
-    
-
-    
-      <h2>License</h2>
+<div class='row'>
+    <div class='span16'>
+<h2>License</h2>
       <p>Released under MIT license. http://www.opensource.org/licenses/mit-license.php</p>
     
 
     
       <h2>Authors</h2>
-      <p>Graham McNicoll </p>
-    
-
-    
+      <p>Graham McNicoll for <a href="http://www.education.com/">Education.com</a></p>
 
     <h2>Download</h2>
     <p>
@@ -105,8 +219,7 @@ Features
     <div class="footer">
       get the source code on GitHub : <a href="https://github.com/Auz/HP_BlackList">Auz/HP_BlackList</a>
     </div>
-
-  </div>
-
+    </div>
+</div>
 </body>
 </html>
