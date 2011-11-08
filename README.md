@@ -34,28 +34,31 @@ Example Use
 ----------
 
 A simple test whether or not to allow the current user to do some action:
+```php
+require_once(HP_BlackList.class.php);
 
-	require_once(HP_BlackList.class.php);
-	
-	if(!HP_BlackList::allow($_SERVER['REMOTE_ADDR'])) {
-		die('not allowed');
-	}
+if( !HP_BlackList::allow($_SERVER['REMOTE_ADDR']) ) {
+	die('not allowed');
+}
+```
 
 Block only harvesters
 
-	require_once(HP_BlackList.class.php);
-	
-	$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
-	if(in_array($blr->typeArray, HP_BlackList::TYPE_HARVESTER)) {
-		die('no harvesters');
-	}
+```php
+require_once(HP_BlackList.class.php);
 
+$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
+if( in_array( $blr->typeArray, HP_BlackList::TYPE_HARVESTER) ) {
+	die('no harvesters');
+}
+```
 
 Find only Google search crawlers:
+```php
+require_once(HP_BlackList.class.php);
 
-	require_once(HP_BlackList.class.php);
-	
-	$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
-	if( $blr->searchEngineType == 'Google' ) {
-		echo "Hello google!";
-	}
+$blr = HP_BlackList::check($_SERVER['REMOTE_ADDR']);
+if( $blr->searchEngineType == 'Google' ) {
+	echo "Hello google!";
+}
+```
