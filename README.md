@@ -34,6 +34,7 @@ Example Use
 ----------
 
 A simple test whether or not to allow the current user to do some action:
+
 ```php
 require_once(HP_BlackList.class.php);
 
@@ -54,6 +55,7 @@ if( in_array( $blr->typeArray, HP_BlackList::TYPE_HARVESTER) ) {
 ```
 
 Find only Google search crawlers:
+
 ```php
 require_once(HP_BlackList.class.php);
 
