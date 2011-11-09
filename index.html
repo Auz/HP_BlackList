@@ -50,7 +50,7 @@
   <div class="row"> 
     <div class="span8"> 
       <h3>Poject Honey Pot's API</h3> 
-      <p>Project Honey Pot has an API called Http:BL which uses effecient DNS queries to check IP addresses against their black lists. You can see more about this project, (and help out by adding a honey pot to your site) at: <a href="http://www.projecthoneypot.org/httpbl_api.php">http://www.projecthoneypot.org/httpbl_api.php</a></p>
+      <p>Project Honey Pot has an API called Http:BL which uses effecient DNS queries to check IP addresses against their black list of web based malicious activities. It can determine if a user's IP is a <em>search engine</em>, a <em>harvester</em>, a <em>comment spammer</em>, or just <em>suspicious</em>, as well as a <em>theat level</em>. You can see more about this project, (and help out by adding a honey pot to your site) at: <a href="http://www.projecthoneypot.org/httpbl_api.php">http://www.projecthoneypot.org/httpbl_api.php</a></p>
     </div> 
     <div class="span8"> 
       <h3>Features of this class</h3> 
@@ -89,12 +89,17 @@
           <tbody>
           <tr>
             <td><strong>allow($ip)</strong></td>
-            <td>A static method which returns true if the passed in IP address is less than the thresholds set, or false on failure. Adjust $threatThreshold and $typeBitThreshold to adjust this method's sensitivity. On error, this method assumes the IP should be allowed.
+            <td>A public static method which returns true if the passed in IP address is less than the thresholds set, or false on failure. Adjust $threatThreshold and $typeBitThreshold to adjust this method's sensitivity. On error, this method assumes the IP should be allowed.
             </td>
           </tr>
           <tr>
             <td><strong>check($ip)</strong></td>
-            <td>A static method which checks the IP against the black list and returns an object of <em>HP_BlackListResult</em> populated with the returned information. On error this method returns an almost empty object, but the type is set to 'not blacklisted', and threat to 0.
+            <td>A public static method which checks the IP against the black list and returns an object of <em>HP_BlackListResult</em> populated with the returned information. On error this method returns an almost empty object, but the type is set to 'not blacklisted', and threat to 0.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>getAPIKey($ip)</strong></td>
+            <td>A private static method which returns the API key. Can be used if you wish to store the API key elsewhere. By default it returns the constant HP_API_KEY.
             </td>
           </tr>
         </body> 
