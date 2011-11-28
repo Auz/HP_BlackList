@@ -2,6 +2,7 @@ HP_BlackList
 ===========
 
 HP_BlackList provides a PHP class which checks IP addresses against Project Honey Pot's http:BL (black list). 
+[See this project's page](http://auz.github.com/HP_BlackList/).
 
 For more information on Project Honey Pot and their API see: 
 [Project Honey Pot](http://www.projecthoneypot.org/httpbl_api.php)
